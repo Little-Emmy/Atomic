@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Atom Builder</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; text-align: center; color: #333; }
+        .container { max-width: 600px; margin: 20px auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .controls { display: flex; justify-content: space-around; margin-top: 20px; }
+        .btn { padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; color: white; font-weight: bold; }
+        .btn-proton { background-color: #e74c3c; } /* 紅色 */
+        .btn-neutron { background-color: #2ecc71; } /* 綠色 */
+        .btn-electron { background-color: #3498db; } /* 藍色 */
+        .dashboard { margin-top: 20px; padding: 15px; background: #ecf0f1; border-radius: 8px; font-size: 18px; }
+        .element-name { font-size: 32px; font-weight: bold; color: #2c3e50; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>⚛️ Atom Builder</h2>
+    <p>Click the buttons to add subatomic particles!</p>
+    
+    <div class="controls">
+        <button class="btn btn-proton" onclick="addParticle('proton')">+ Add Proton (p⁺)</button>
+        <button class="btn btn-neutron" onclick="addParticle('neutron')">+ Add Neutron (n⁰)</button>
+        <button class="btn btn-electron" onclick="addParticle('electron')">+ Add Electron (e⁻)</button>
+    </div>
+
+    <div class="dashboard">
+        <div class="element-name" id="elementName">Hydrogen (H)</div>
+        <p><strong>Protons:</strong> <span id="p-count">1</span> | <strong>Neutrons:</strong> <span id="n-count">0</span> | <strong>Electrons:</strong> <span id="e-count">1</span></p>
+        <p><strong>Mass Number:</strong> <span id="mass">1</span></p>
+        <p><strong>Net Charge:</strong> <span id="charge">0</span></p>
+    </div>
+    
+    <button onclick="resetAtom()" style="margin-top:20px; padding: 8px 15px; cursor:pointer;">Reset Atom</button>
+</div>
+
+<script>
+    let protons = 1; let neutrons = 0; let electrons = 1;
+    const elements = ["Unknown", "Hydrogen (H)", "Helium (He)", "Lithium (Li)", "Beryllium (Be)", "Boron (B)", "Carbon (C)", "Nitrogen (N)", "Oxygen (O)", "Fluorine (F)", "Neon (Ne)"];
+
+    function addParticle(type) {
+        if (type === 'proton' && protons < 10) protons++;
+        if (type === 'neutron' && neutrons < 15) neutrons++;
+        if (type === 'electron' && electrons < 15) electrons++;
+        updateUI();
+    }
+
+    function resetAtom() {
+        protons = 1; neutrons = 0; electrons = 1;
+        updateUI();
+    }
+
+    function updateUI() {
+        document.getElementById('p-count').innerText = protons;
+        document.getElementById('n-count').innerText = neutrons;
+        document.getElementById('e-count').innerText = electrons;
+        
+        let mass = protons + neutrons;
+        let charge = protons - electrons;
+        
+        document.getElementById('mass').innerText = mass;
+        document.getElementById('charge').innerText = charge > 0 ? "+" + charge : charge;
+        
+        let elemName = protons <= 10 ? elements[protons] : "Unknown Element";
+        document.getElementById('elementName').innerText = elemName;
+    }
+</script>
+
+</body>
+</html>
